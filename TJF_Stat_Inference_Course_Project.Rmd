@@ -19,15 +19,21 @@ This distribution starts high and "ski slopes" down toward zero. Now let's look 
 exp_mu <- mean(exp)
 exp_var<- (1/.2)^2
 ```
-The overall population mean, exp_mu = `r exp_mu` and the population variance, exp_var = 'r exp_var`. 
+The overall population mean, exp_mu equals `r exp_mu` and the population variance, exp_var equals `r exp_var`. 
 
-With the parameters of the overall population established, let's take 40 samples and calculate the mean and variance of the sample distribution. 
+With the parameters of the overall population established, let's take 1000 averages from 40 exponential samples then calculate the mean and variance of the distribution of those samples. 
 ```{r}
 exp_samp <- NULL
 for(i in 1:1000) exp_samp <- c(exp_samp, mean(rexp(40, .2)))
 hist(exp_samp, main = "Dist of 1K Ave from 40 exponential variables")
 ```
 
+The distribution of the sample is starting to look more like a normal distribution. Now, let's calculate the mean and variance for the distribution of the samples.
+```{r}
+exp_samp_mean <- mean(exp_samp)
+exp_samp_var <- var(exp_samp)
+```
+The sampling mean equals `r exp_samp_mean` and the sampling variance equals `r exp_samp_var`. 
 
 #Sample Mean Vs. Theoretical Mean
 
