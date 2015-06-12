@@ -1,0 +1,38 @@
+---
+title: "Statistical Inference Course Project"
+author: "Travis Fell"
+date: "Thursday, June 11, 2015"
+output: html_document
+---
+#Overview
+
+#Simulations
+This following R code creates the exponential distribution, finds the mean and variance for the distribution, pulls the requisite number of samples, finds the distribution of all those sample means and variances for comparison to the theoretical mean and variances later. 
+
+First, let's create the exponential distribution and plot it out. 
+``` {R}
+exp <- rexp(1000, .02)
+hist(exp, main = "Exponential Distribution of 1000 Simulations")
+```
+This distribution starts high and "ski slopes" down toward zero. Now let's look at the mean and variance for this distribution.
+```{r}
+exp_mu <- mean(exp)
+exp_var<- (1/.2)^2
+```
+The overall population mean, exp_mu = `r exp_mu` and the population variance, exp_var = 'r exp_var`. 
+
+With the parameters of the overall population established, let's take 40 samples and calculate the mean and variance of the sample distribution. 
+```{r}
+exp_samp <- NULL
+for(i in 1:1000) exp_samp <- c(exp_samp, mean(rexp(40, .2)))
+hist(exp_samp, main = "Dist of 1K Ave from 40 exponential variables")
+```
+
+
+#Sample Mean Vs. Theoretical Mean
+
+#Sample Variance Vs. Theoretical Variance
+
+#Distribution
+
+
