@@ -1,5 +1,5 @@
 ---
-title: "Statistical Inference Course Project"
+title: "Comparing Exponential Distribution to the Central Limit Theorem"
 author: "Travis Fell"
 date: "Thursday, June 11, 2015"
 output: html_document
@@ -9,36 +9,43 @@ output: html_document
 #Simulations
 This following R code creates the exponential distribution, finds the mean and variance for the distribution, pulls the requisite number of samples, finds the distribution of all those sample means and variances for comparison to the theoretical mean and variances later. 
 
-First, let's create the exponential distribution and plot it out. 
+First, let's create the exponential distribution as well as its mean and variance.
 ``` {R}
 exp <- rexp(1000, .02)
-hist(exp, main = "Exponential Distribution of 1000 Simulations")
+exp_mu <- (1/.2)
+exp_var <- (1/.2)
 ```
-This distribution starts high and "ski slopes" down toward zero. Now let's look at the mean and variance for this distribution.
-```{r}
-exp_mu <- mean(exp)
-exp_var<- (1/.2)^2
-```
+
 The overall population mean, exp_mu equals `r exp_mu` and the population variance, exp_var equals `r exp_var`. 
 
-With the parameters of the overall population established, let's take 1000 averages from 40 exponential samples then calculate the mean and variance of the distribution of those samples. 
+With the parameters of the overall population established, let's take 1000 averages from 40 exponential samples then calculate the mean and variance of the distribution of those sample means. 
 ```{r}
 exp_samp <- NULL
 for(i in 1:1000) exp_samp <- c(exp_samp, mean(rexp(40, .2)))
-hist(exp_samp, main = "Dist of 1K Ave from 40 exponential variables")
-```
-
-The distribution of the sample is starting to look more like a normal distribution. Now, let's calculate the mean and variance for the distribution of the samples.
-```{r}
 exp_samp_mean <- mean(exp_samp)
-exp_samp_var <- var(exp_samp)
+exp_samp_var <- exp_var/40
 ```
-The sampling mean equals `r exp_samp_mean` and the sampling variance equals `r exp_samp_var`. 
+The collection of sample means equals `r exp_samp_mean` and the sampling variance equals `r exp_samp_var`. 
 
 #Sample Mean Vs. Theoretical Mean
+The collection of sample means of `r exp_samp_mean` tracks relatively closely to the the mean of the exponential distribution, which is `r exp_mu`. This close correspondence supports the property of the Central Limit Theorem that the expected value of the sample means should be the same or close to the mean of the original distribution. 
 
 #Sample Variance Vs. Theoretical Variance
+The variance of the sample means of `r exp_samp_var` is dramatically smaller than that of the theoretical variance of the exponential distribution of `r exp_var`. Given that 1000 samples were used in the simulation, this narrow sample variance demonstrates that as sample sizes increase, the distribution tends to "tighten up" around the sample mean. 
 
 #Distribution
+The code and plot below describe the exponential distribution. 
+```{r}
+hist(exp, main = "Exponential Distribution of 1000 Simulations")
+abline(v=exp_mu, col = "blue")
+```
 
+This distribution starts high and "ski slopes" down toward zero.
+
+Now let's look at the distribution of sample means from 40 exponential samples.  
+```{r}
+hist(exp_samp, main = "Dist of 1000 Sample Means")
+abline(v=exp_samp_mean, col="red")
+```
+The distribution of the sample looks more like a normal distribution. These two plots put together illustrate why the distribution of sample means for any distribution will tend to be a normal looking distribution: For a single sample, the mean will be the "balancing point" for the sample. Because the mean will vary from sample to sample but should more often be close to the true mean of the population than far away, the collection of balancing points from many samples will create a normal looking distribution. 
 
