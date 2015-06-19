@@ -5,6 +5,7 @@ date: "Thursday, June 11, 2015"
 output: html_document
 ---
 #Overview
+This analysis compares the distributions, means and variances of an exponential distribution to the same for the distribution of sample means from that exponential distribution. The end goal is to show the central limit theorem in action. 
 
 #Simulations
 This following R code creates the exponential distribution, finds the mean and variance for the distribution, pulls the requisite number of samples, finds the distribution of all those sample means and variances for comparison to the theoretical mean and variances later. 
@@ -47,5 +48,6 @@ Now let's look at the distribution of sample means from 40 exponential samples.
 hist(exp_samp, main = "Dist of 1000 Sample Means")
 abline(v=exp_samp_mean, col="red")
 ```
+
 The distribution of the sample looks more like a normal distribution. These two plots put together illustrate why the distribution of sample means for any distribution will tend to be a normal looking distribution: For a single sample, the mean will be the "balancing point" for the sample. Because the mean will vary from sample to sample but should more often be close to the true mean of the population than far away, the collection of balancing points from many samples will create a normal looking distribution. 
 

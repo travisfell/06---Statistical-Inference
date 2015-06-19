@@ -1,0 +1,71 @@
+---
+title: "Inference of the Tooth Growth Data Set"
+author: "Travis Fell"
+date: "Thursday, June 18, 2015"
+output: html_document
+---
+#Overview
+This analysis puts into action tools and techniques from the Exploratory Data Analysis class as well as hypothesis testing from the Statistical Inference class using the ToothData dataset in R. 
+
+#Load and Explore the Data
+First, we'll load the datasets package and other packages we will use in this analysis (this analysis assumes these packages have already been downloaded and instatlled).  
+```{r}
+library(dplyr)
+library(ggplot2)
+library(datasets)
+data(ToothGrowth)
+```
+Now, we'll do some basic exploratory analysis just to get a feel for this data set. 
+```{r}
+dim(ToothGrowth)
+ToothGrowth[!complete.cases(ToothGrowth)]
+head(ToothGrowth)
+View(ToothGrowth)
+lenrange <- range(ToothGrowth$len)
+str(ToothGrowth)
+summary(ToothGrowth$len)
+```
+Digging a little deeper, let's look at the distribution of tooth lengths (or the purpose of this analysis, I will assume length is in microns), the number of observations by supplement delivery method and dose and the average tooth length by method and dose.
+```{r}
+lenave <- mean(ToothGrowth$len)
+hist(ToothGrowth$len, main = "Overall Distribution of Tooth Length", xlab = "Length in Microns")
+abline(v = lenave , col = "red")
+nrow(subset(ToothGrowth, supp == "OJ"))
+nrow(subset(ToothGrowth, supp == "VC"))
+unique(ToothGrowth$dose)
+nrow(subset(ToothGrowth, dose == 0.5))
+nrow(subset(ToothGrowth, dose == 1.0))
+nrow(subset(ToothGrowth, dose == 2.0))
+```
+So, the exploration of this data set has revealed the following: 
+- The data set is 60 rows long with 3 columns, len, supp and dose
+- The len columns contains varying tooth lengths 
+- The overall range in tooth lengths is `r lenrange'
+- The average tooth length is `r lenave`
+- The supp column is a factor that contains two Vitamin C supplement delivery methods, OJ and VC
+- Half the data set has OJ for the supp value, the other half has VC
+- There are three distinct dosage levels: 0.5, 1.0, 2.0
+- There are 20 records each for each dosage level listed above
+
+
+#Summarize the Data
+To further understand the tooth length data along by supplement method and dosage, we will find the average tooth length and standard deviation by supplement method then by dosage level. 
+```{r}
+growthBySupp <- summarize(group_by(ToothGrowth, supp), mean(len), sd(len))
+colnames(growthBySupp) <- c("supp", "meanlen", "sdlen")
+growthByDose <- summarize(group_by(ToothGrowth, dose), mean(len), sd(len))
+colnames(growthByDose) <- c("supp", "meanlen", "sdlen")
+```
+
+#Assumptions
+
+#Testing Tooth Growth
+The data shows tooth growth by two dimensions: delivery method and doses. Since the sample sizes are relatively small, we'll use the T distribution to compare our hypotheses. 
+
+The first hypothesis we'll test is whether or not the supplemental delivery method OJ (orange juice) has a greater impact on tooth growth than VC (absorbic acid). 
+```{r}
+(growthBySupp[1,2] - growthBySupp[2,2]) + c(-1,1) * qt(.975, 58) * (growthBySupp[1,3]^2/30 + growthBySupp[2,3]^2/30)^.5
+```
+
+
+#Conclusion
