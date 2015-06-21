@@ -123,8 +123,9 @@ str(ToothGrowth)</code></pre>
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>nrow(subset(ToothGrowth, dose == 2.0))</code></pre>
 <pre><code>## [1] 20</code></pre>
-<p>So far, the exploration of this data set has revealed the following: * The data set is 60 rows long with 3 columns, len, supp and dose</p>
+<p>So far, the exploration of this data set has revealed the following:</p>
 <ul>
+<li><p>The data set is 60 rows long with 3 columns, len, supp and dose</p></li>
 <li><p>The len columns contains varying tooth lengths</p></li>
 <li><p>The overall range in tooth lengths is 4.2, 33.9</p></li>
 <li><p>The average tooth length is 18.8133333</p></li>
@@ -217,7 +218,6 @@ t.test(growthOJ - growthVC, var.equal = TRUE)</code></pre>
 ## sample estimates:
 ## mean of x 
 ##       3.7</code></pre>
-<pre class="r"><code>suppCI &lt;- t.test(growthOJ - growthVC, var.equal = TRUE)$conf.int</code></pre>
 <p>The hypothesis test reveals a 95% confidence interval of 1.4086586, 5.9913414. As this interval is entirely above zero, we can reasonably conclude that the OJ supplement does indeed have a greater impact on tooth growth than the and we can accept the alternative hypothesis.</p>
 <p>Now, let’s have closer look at the dose data. We’ll test two hypotheses: 1. The 1.0 dose has a greater impact on tooth growth than the 0.5 dose. 2. The 2.0 does has a greater impact on tooth growth than the 1.0 dose.</p>
 <pre class="r"><code>growth0.5 &lt;- subset(ToothGrowth, dose == &quot;0.5&quot;, select = &quot;len&quot;)
@@ -234,7 +234,6 @@ t.test(growth1.0 - growth0.5, var.equal = TRUE)</code></pre>
 ## sample estimates:
 ## mean of x 
 ##      9.13</code></pre>
-<pre class="r"><code>dose1.0CI &lt;- t.test(growth1.0 - growth0.5, var.equal = TRUE)$conf.int</code></pre>
 <p>This hypothesis test reveals a 95% confidence interval of 6.3871212, 11.8728788. As the previous exploratory analysis suggested, increasing the dosage by .5 leads to significantly more tooth growth. What about the impact of increasing from 1.0 to 2.0?</p>
 <pre class="r"><code>growth2.0 &lt;- subset(ToothGrowth, dose == &quot;2&quot;, select = &quot;len&quot;)
 t.test(growth2.0 - growth1.0, var.equal = TRUE)</code></pre>
@@ -249,7 +248,6 @@ t.test(growth2.0 - growth1.0, var.equal = TRUE)</code></pre>
 ## sample estimates:
 ## mean of x 
 ##     6.365</code></pre>
-<pre class="r"><code>dose2.0CI &lt;- t.test(growth2.0 - growth1.0, var.equal = TRUE)$conf.int</code></pre>
 <p>This hypothesis test reveals a 95% confidence interval of 3.4718143, 9.2581857. Though this is an increase in tooth growth, it is interesting to note that confidence interval is not as high above 0 as the the hypothesis test from 0.5 to 1.0. Also, the increase in tooth growth was an average of 9 microns greater when adding .5 units from .5 to 1.0, but only 7 microns greater when adding 1 unit, from 1.0 to 2.0.</p>
 </div>
 <div id="conclusions-and-assumptions" class="section level1">
