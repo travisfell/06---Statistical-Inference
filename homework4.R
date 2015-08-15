@@ -13,3 +13,5 @@ sixmpg <- subset(mtcars, cyl == 6, select = c("mpg", "cyl"))
 t.test(fourmpg, sixmpg, var.equal = FALSE, paired = FALSE, alternative = "two.sided")$p.value
 mean(fourmpg$mpg)
 mean(sixmpg$mpg)
+
+# question 8 (relates to quize question 5)

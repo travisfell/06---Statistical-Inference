@@ -20,5 +20,24 @@ pbinom(2, 4, .5, lower.tail = FALSE)
 ppois(10, 17.87, lower.tail = TRUE)
 
 # question 5
-t.test(-3-1, var.equal = TRUE, alternative = "two.sided")$p.value
+t.test(9,9,mu = -3-1, var.equal = TRUE, alternative = "two.sided")$p.value
+mu5_0 <- 1
+mu5_a <- -3
+n_0 <- 9
+n_a <- 9
+sd_0 <- 1.8
+sd_a <- 1.5
 
+sp <- ((n_0 - 1)*sd_0^2 + (n_a - 1)*sd_a^2)/(n_0 + n_a - 2)
+se <- sp/sqrt(n_0 + n_a)
+t <- (mu5_a - mu5_0)/se
+2*(pnorm(-abs(t))$p.value)
+# still not solving
+
+# question 7
+power.t.test(100, delta = .01, sd = .04, 
+             alternative = "one.sided", type = "paired")
+
+# question 8
+power.t.test(delta = .01, sd = .04, 
+             alternative = "one.sided", type = "paired", power = .9)
